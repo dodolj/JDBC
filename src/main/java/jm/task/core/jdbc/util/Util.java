@@ -9,9 +9,9 @@ public class Util {
     //собрать "transactionManager"
 
     // URL для подключения: jdbc:postgresql://<хост>:<порт>/<название_БД>
-    private static final String URL = "jdbc:postgresql://localhost:5432/your_db";
-    private static final String USERNAME = "your_username";
-    private static final String PASSWORD = "your_password";
+    private static final String URL = "jdbc:postgresql://localhost:5432/my_postgres";
+    private static final String USERNAME = "user";
+    private static final String PASSWORD = "password";
 
     static {
         try {
