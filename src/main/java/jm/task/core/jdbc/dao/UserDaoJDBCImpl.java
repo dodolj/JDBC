@@ -1,13 +1,28 @@
 package jm.task.core.jdbc.dao;
 
+import jm.task.core.jdbc.Main;
 import jm.task.core.jdbc.model.User;
+import org.postgresql.gss.GSSOutputStream;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+//UUID
 
 public class UserDaoJDBCImpl implements UserDao {
-    private static final String URL = "jdbc:postgresql://localhost:5432/my_postgres";
+
+    private static final Logger logger = Logger.getLogger(UserDaoJDBCImpl.class.getName());
+
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 
@@ -24,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.executeUpdate(sql);
             System.out.println(successMessage);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
@@ -36,7 +51,7 @@ public class UserDaoJDBCImpl implements UserDao {
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
     }
 
@@ -86,7 +101,10 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            System.out.println(sw);
         }
         return users;
     }

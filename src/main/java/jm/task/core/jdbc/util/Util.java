@@ -4,12 +4,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    // реализуйте настройку соеденения с БД
-    //открыть connection с БД (в java.SQL.
-    //собрать "transactionManager"
-
     // URL для подключения: jdbc:postgresql://<хост>:<порт>/<название_БД>
-    private static final String URL = "jdbc:postgresql://localhost:5432/my_postgres";
+    /*private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
@@ -29,5 +25,5 @@ public class Util {
             e.printStackTrace();
         }
         return connection;
-    }
+    }*/
 }
