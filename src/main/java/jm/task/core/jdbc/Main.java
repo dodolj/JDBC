@@ -9,6 +9,11 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+    //привести код в порядок
+    //залить на гит "говнокода"
+    //почитать про Lombok + подключить
+    //настроись совместимость ломбка с мавеном
+    //UUID
 
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
