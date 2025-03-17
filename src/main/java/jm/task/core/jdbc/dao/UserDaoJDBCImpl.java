@@ -2,15 +2,12 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class UserDaoJDBCImpl implements UserDao {
-
     private static final Logger logger = Logger.getLogger(UserDaoJDBCImpl.class.getName());
 
     private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
@@ -93,9 +90,6 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.info(e.getMessage());
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            System.out.println(sw);
         }
         return users;
     }
