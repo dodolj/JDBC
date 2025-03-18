@@ -4,8 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    // URL для подключения: jdbc:postgresql://<хост>:<порт>/<название_БД>
-    /*private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
@@ -25,5 +24,5 @@ public class Util {
             e.printStackTrace();
         }
         return connection;
-    }*/
+    }
 }
