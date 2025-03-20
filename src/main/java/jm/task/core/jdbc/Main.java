@@ -3,40 +3,35 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
-
-    //привести код в порядок
-    //залить на гит "говнокода"
-    //почитать про Lombok + подключить
-    //настроись совместимость ломбка с мавеном
-    //UUID
 
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         UserDao userDao = new UserDaoJDBCImpl();
+        UserServiceImpl userService = new UserServiceImpl(userDao);
 
-        userDao.createUsersTable();
-        logger.info("Таблица пользователей создана.");
+        userService.createUsersTable();
+        logger.info("Таблица пользователей создана");
 
-        userDao.saveUser("Dima", "Drozdov", (byte) 25);
-        userDao.saveUser("Misha", "Zhurikov", (byte) 24);
-        userDao.saveUser("Charlie", "Chaplin", (byte) 35);
-        userDao.saveUser("Count", "Dracula", (byte) 2000);
-        logger.info("4 пользователя добавлены в базу данных.");
+        userService.saveUser("Dima", "Drozdov", (byte) 25);
+        userService.saveUser("Misha", "Zhurikov", (byte) 24);
+        userService.saveUser("Charlie", "Chaplin", (byte) 35);
+        userService.saveUser("Count", "Dracula", (byte) 2000);
+        logger.info("4 пользователя добавлены в базу данных");
 
-        List<User> users = userDao.getAllUsers();
-        for (User user : users) {
-            System.out.println(user);
-        }
+        List<User> users = userService.getAllUsers();
+        userService.getAllUsers().forEach(System.out::println);
 
-        userDao.cleanUsersTable();
-        logger.info("Таблица пользователей очищена.");
+        userService.cleanUsersTable();
+        logger.info("Таблица пользователей очищена");
 
-        userDao.dropUsersTable();
-        logger.info("Таблица пользователей удалена.");
+        userService.dropUsersTable();
+        logger.info("Таблица пользователей удалена");
     }
 }
