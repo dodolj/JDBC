@@ -36,10 +36,12 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() throws SQLException {
-        String sql = "CREATE TABLE users ("
-                + "id INT PRIMARY KEY AUTO_INCREMENT, "
-                + "username VARCHAR(50) NOT NULL, "
-                + "email VARCHAR(100) NOT NULL)";
+        String sql = "CREATE TABLE IF NOT EXISTS users (" +
+                "id SERIAL PRIMARY KEY, " +
+                "name VARCHAR(100) NOT NULL, " +
+                "lastname VARCHAR(100) NOT NULL, " +
+                "age INT NOT NULL " +
+                ");";
         try {
             executeUpdate(sql);
             logger.info("Таблица пользователей успешно создана");
