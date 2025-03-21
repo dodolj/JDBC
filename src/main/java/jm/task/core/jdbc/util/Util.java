@@ -1,9 +1,12 @@
 package jm.task.core.jdbc.util;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 
+import org.hibernate.SessionFactory;
+
+import java.lang.module.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Util {
@@ -20,12 +23,12 @@ public class Util {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             logger.info("Ошибка подключения к БД");
-            throw e;
+            throw new RuntimeException();
         }
     }
 }

@@ -5,14 +5,13 @@ import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserServiceImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         UserDao userDao = new UserDaoJDBCImpl();
         UserServiceImpl userService = new UserServiceImpl(userDao);
 
