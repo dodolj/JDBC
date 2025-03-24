@@ -14,6 +14,36 @@ public class UserDaoJDBCImpl implements UserDao {
     public UserDaoJDBCImpl() {
     }
 
+    @Override
+    public void createUsersTable() {
+
+    }
+
+    @Override
+    public void dropUsersTable() {
+
+    }
+
+    @Override
+    public void saveUser(String name, String lastName, byte age) {
+
+    }
+
+    @Override
+    public void removeUserById(long id) {
+
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return List.of();
+    }
+
+    @Override
+    public void cleanUsersTable() {
+
+    }
+/*
     public void executeUpdate(String sql) {
         try (Connection connection = Util.getConnection();
              Statement statement = connection.createStatement()) {
@@ -35,6 +65,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void createUsersTable() {
         String sql = "CREATE TABLE IF NOT EXISTS users (" +
                 "id SERIAL PRIMARY KEY, " +
@@ -93,4 +124,5 @@ public class UserDaoJDBCImpl implements UserDao {
         executeUpdate(sql);
         System.out.println("Таблица пользователей очищена");
     }
+ */
 }

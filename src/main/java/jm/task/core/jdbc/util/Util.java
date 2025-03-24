@@ -1,12 +1,14 @@
 package jm.task.core.jdbc.util;
 
+import lombok.Getter;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
-import java.lang.module.Configuration;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Util {
@@ -15,11 +17,32 @@ public class Util {
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
 
+    @Getter
+    private static SessionFactory sessionFactory;
+
     static {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }
+
+        try {
+            Configuration configuration = new Configuration();
+            configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
+            configuration.setProperty("hibernate.connection.url", URL);
+            configuration.setProperty("hibernate.connection.username", USERNAME);
+            configuration.setProperty("hibernate.connection.password", PASSWORD);
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            configuration.setProperty("hibernate.show_sql", "true");
+            configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+
+            configuration.addAnnotatedClass(jm.task.core.jdbc.model.User.class);
+
+            sessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable e) {
+            logger.severe("Ошибка при инициализации SessionFactory: " + e);
+            throw new ExceptionInInitializerError(e);
         }
     }
 
@@ -28,7 +51,7 @@ public class Util {
             return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             logger.info("Ошибка подключения к БД");
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }
