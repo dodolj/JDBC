@@ -4,7 +4,6 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import jm.task.core.jdbc.model.User;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,8 +16,9 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
+        Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (" +
                     "id BIGSERIAL PRIMARY KEY, " +
                     "name VARCHAR(255), " +
@@ -27,18 +27,25 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
             logger.info("Таблица пользователей создана");
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             logger.severe("Ошибка при создании таблицы пользователей: " + e.getMessage());
         }
     }
 
     @Override
     public void dropUsersTable() {
+        Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS users").executeUpdate();
             transaction.commit();
             logger.info("Таблица пользователей удалена");
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             logger.severe("Ошибка при удалении таблицы пользователей: " + e.getMessage());
         }
     }
@@ -63,8 +70,9 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
+        Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             User user = session.get(User.class, id);
             if (user != null) {
                 session.delete(user);
@@ -74,6 +82,9 @@ public class UserDaoHibernateImpl implements UserDao {
                 logger.warning(String.format("Пользователь с id %s не найден", id));
             }
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             logger.severe("Ошибка при удалении пользователя: " + e.getMessage());
         }
     }
@@ -90,12 +101,16 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
+        Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
             session.createQuery("DELETE FROM User").executeUpdate();
             transaction.commit();
             logger.info("Таблица пользователей очищена");
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             logger.severe("Ошибка при очистке таблицы пользователей: " + e.getMessage());
         }
     }
